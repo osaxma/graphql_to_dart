@@ -10,6 +10,12 @@ if you've `dartfmt` installed, you can add the format flag to format the dart ou
 dart bin/main.dart -s path/to/input/file.graphql -o path/to/output/file.dart -f 
 ```
 
+### currently supported types:
+- query
+- mutation
+- subscription 
+- fragment 
+
 
 ### example 
 Input graphql file:

@@ -59,10 +59,7 @@ Usage: graphql_to_dart [arguments]
     }
   }
   stdout.writeln('starting ...');
-  //  stdin.readLineSync();
 
-  print('reading from ${sourceUri.path}');
-  print('writing to ${outputUri.path}');
 
   // ------------------------------------------------------------------ Start converting
 
