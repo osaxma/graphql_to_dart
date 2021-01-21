@@ -1,18 +1,15 @@
 import 'dart:io';
 
-
 import 'package:args/args.dart';
 import 'package:path/path.dart' as p;
 
-
-import 'package:graphql_to_dart_constants/src/graphql_to_dart_converter.dart';
-
+import 'converter.dart';
+import 'formatter.dart';
 import 'util.dart';
 
-void main(List<String> arguments) async {
+void runner(List<String> arguments) async {
   Uri sourceUri;
   Uri outputUri;
-
   // ------------------------------------------------------------------ Argument Parsing
   final parser = ArgParser()
     ..addFlag('help', abbr: 'h', help: 'print the usage', negatable: false)
@@ -33,8 +30,6 @@ Usage: graphql_to_dart [arguments]
     print(parser.usage);
     exit(0);
   }
-
-  
 
   if (!argResults.wasParsed('source')) {
     stderr.writeln('error: the source graphql file needs to be specificed');
@@ -69,7 +64,6 @@ Usage: graphql_to_dart [arguments]
   print('reading from ${sourceUri.path}');
   print('writing to ${outputUri.path}');
 
-
   // ------------------------------------------------------------------ Start converting
 
   final inputFile = File(sourceUri.path);
@@ -86,5 +80,5 @@ Usage: graphql_to_dart [arguments]
   if (argResults['format']) {
     await formatFile(outputFile);
   }
-  exit(0);
+
 }
