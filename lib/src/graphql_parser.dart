@@ -103,7 +103,7 @@ final fragmentNameRegex = RegExp(r'(?<=(fragment)[\s]+)[\w]*(?=[\s]+[on])');
 // part3: (?<=\)) ==> ends with a bracket
 // [\s]+ should capture all whitespace, including spaces, tabs, carriage returns, and some weird whitespace characters.
 // Use [\s]* if you want it to be optional.
-final queryArgumentsRegex = RegExp(r'(?<=(mutation|query|fragment|subscription)[\s]+[\w]*[\s]+)[\(].*(?<=\))');
+final queryArgumentsRegex = RegExp(r'(?<=(mutation|query|fragment|subscription)[\s]+[\w]+)\(.*(?<=\))');
 
 
 // the input argument is in the following format:

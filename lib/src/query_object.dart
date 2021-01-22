@@ -1,4 +1,4 @@
-
+import 'util.dart';
 
 class Query {
   final String name;
@@ -10,12 +10,7 @@ class Query {
   final String rawQuery;
 
   const Query({this.name, this.arguments, this.type, this.rawQuery, this.precedingBlock});
-
-
 }
-
-
-
 
 class Argument {
   String type; // int, String, list, etc.
@@ -28,37 +23,3 @@ class Argument {
     this.defaultValue,
   });
 }
-
-
-const queryClassOutput = ''' 
-class Query {
-  final String key;
-  final String query;
-  final Map<String, dynamic> variables;
-
-  const Query({this.key, @required this.query, @required this.variables});
-}
-''';
-
-/* eg 
-
-Query getUsersQuery(String uid) {
-
-
-
-  Query(query: getUsersRawQuery, );
- } 
-*/
-
-String generateQueryFunctionWithArguments(String name, List<Argument> arguments) {
-  final functionName = name.replaceAll('Raw', ''); // getUsersRawQuery => getUsersQuery
-  var argumentsString = '';
-  for (var arg in arguments) {
-    argumentsString = argumentsString + arg.type + ' ' + arg.name + ',';
-  }
-  // remove trailing comment
-  if (argumentsString.isNotEmpty) argumentsString = argumentsString.substring(0, argumentsString.length - 1);
-
-  return 'Query $functionName($argumentsString) => Query(query: $name, )';
-}
-

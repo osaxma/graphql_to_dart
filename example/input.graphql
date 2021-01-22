@@ -132,7 +132,7 @@ mutation createComment($comment_content: String!, $created_by: String!, $foro_id
 
 # TODO: react to post  
 
-mutation reactToPost($foro_id: String!, $post_id: String!, $reaction: reactions_enum = like, $uid: String!) {
+mutation reactToPost($foro_id: String!, $post_id: String!, $reaction: String! = "like", $uid: String!) {
   insert_posts_reactions_one(object: {uid: $uid, foro_id: $foro_id, post_id: $post_id, reaction: $reaction}) {
     uid
     reaction_id
@@ -150,11 +150,13 @@ mutation unReactToPost($foro_id: String!, $post_id: String!, $uid: String!) {
   }
 }
 
-query whatAquery { }
+query whatAquery { 
+
+}
 
 
 # TODO: react to comment
-mutation reactToComment($foro_id: String!, $post_id: String!, $comment_id: String!, $reaction: reactions_enum = like, $uid: String!) {
+mutation reactToComment($foro_id: String!, $post_id: String!, $comment_id: String!, $reaction: String! = "like", $uid: String!) {
   insert_comments_reactions_one(object: {uid: $uid, foro_id: $foro_id, post_id: $post_id, comment_id: $comment_id, reaction: $reaction}) {
     uid
     reaction_id
