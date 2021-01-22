@@ -5,7 +5,7 @@ Usage:
 dart bin/main.dart -s path/to/input/file.graphql -o path/to/output/file.dart
 ```
 
-if you've `dartfmt` installed, you can add the format flag to format the dart output file: 
+You can add the format flag to format the dart output file (uses `dart format`): 
 ```sh
 dart bin/main.dart -s path/to/input/file.graphql -o path/to/output/file.dart -f 
 ```
