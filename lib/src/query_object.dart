@@ -1,5 +1,3 @@
-import 'util.dart';
-
 class Query {
   final String name;
   final List<Argument> arguments;

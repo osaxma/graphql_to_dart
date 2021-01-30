@@ -7,7 +7,7 @@ class Query {
   const Query({@required this.query, @required this.variables});
 }
 
-Query updateProfilePhotoURL(
+Query updateProfilePhotoURLReq(
   String uid,
   String photo_url,
 ) {
@@ -20,7 +20,7 @@ Query updateProfilePhotoURL(
   );
 }
 
-Query updateProfileDisplayName(
+Query updateProfileDisplayNameReq(
   String uid,
   String display_name,
 ) {
@@ -33,7 +33,7 @@ Query updateProfileDisplayName(
   );
 }
 
-Query createForo(
+Query createForoReq(
   String display_name,
   String photo_url,
   String created_by,
@@ -50,7 +50,7 @@ Query createForo(
   );
 }
 
-Query joinForo(
+Query joinForoReq(
   String uid,
   String foroID,
 ) {
@@ -63,7 +63,7 @@ Query joinForo(
   );
 }
 
-Query leaveForo(
+Query leaveForoReq(
   String uid,
   String foroID,
 ) {
@@ -76,7 +76,7 @@ Query leaveForo(
   );
 }
 
-Query updateForoPhotoURL(
+Query updateForoPhotoURLReq(
   String foroID,
   String photo_url,
 ) {
@@ -89,7 +89,7 @@ Query updateForoPhotoURL(
   );
 }
 
-Query updateForoDisplayName(
+Query updateForoDisplayNameReq(
   String foroID,
   String display_name,
 ) {
@@ -102,14 +102,7 @@ Query updateForoDisplayName(
   );
 }
 
-Query someQueryWithoutArguments() {
-  return Query(
-    query: someQueryWithoutArgumentsRawQuery,
-    variables: <String, dynamic>{},
-  );
-}
-
-Query createPost(
+Query createPostReq(
   String post_content,
   String created_by,
   String foro_id,
@@ -124,7 +117,7 @@ Query createPost(
   );
 }
 
-Query createComment(
+Query createCommentReq(
   String comment_content,
   String created_by,
   String foro_id,
@@ -141,7 +134,7 @@ Query createComment(
   );
 }
 
-Query reactToPost(
+Query reactToPostReq(
   String foro_id,
   String post_id,
   String reaction,
@@ -158,7 +151,7 @@ Query reactToPost(
   );
 }
 
-Query unReactToPost(
+Query unReactToPostReq(
   String foro_id,
   String post_id,
   String uid,
@@ -173,14 +166,7 @@ Query unReactToPost(
   );
 }
 
-Query whatAquery() {
-  return Query(
-    query: whatAqueryRawQuery,
-    variables: <String, dynamic>{},
-  );
-}
-
-Query reactToComment(
+Query reactToCommentReq(
   String foro_id,
   String post_id,
   String comment_id,
@@ -199,7 +185,7 @@ Query reactToComment(
   );
 }
 
-Query unReactToComment(
+Query unReactToCommentReq(
   String foro_id,
   String post_id,
   String comment_id,
@@ -216,7 +202,37 @@ Query unReactToComment(
   );
 }
 
-Query getJoinedForos(
+Query createConversationReq(
+  String receiver_uid,
+  String sender_uid,
+) {
+  return Query(
+    query: createConversationRawMutation,
+    variables: <String, dynamic>{
+      'receiver_uid': receiver_uid,
+      'sender_uid': sender_uid,
+    },
+  );
+}
+
+Query sendMessageReq(
+  String content,
+  String conversation_id,
+  String sender_uid,
+  String parent_id,
+) {
+  return Query(
+    query: sendMessageRawMutation,
+    variables: <String, dynamic>{
+      'content': content,
+      'conversation_id': conversation_id,
+      'sender_uid': sender_uid,
+      'parent_id': parent_id,
+    },
+  );
+}
+
+Query getJoinedForosReq(
   String uid,
 ) {
   return Query(
@@ -227,7 +243,44 @@ Query getJoinedForos(
   );
 }
 
-Query getNewestPosts(
+Query getConversationIDReq(
+  String uid1,
+  String uid2,
+) {
+  return Query(
+    query: getConversationIDRawQuery,
+    variables: <String, dynamic>{
+      'uid1': uid1,
+      'uid2': uid2,
+    },
+  );
+}
+
+Query getConvosReq(
+  String uid,
+) {
+  return Query(
+    query: getConvosRawQuery,
+    variables: <String, dynamic>{
+      'uid': uid,
+    },
+  );
+}
+
+Query getMessagesReq(
+  String conversation_id,
+  String uid,
+) {
+  return Query(
+    query: getMessagesRawQuery,
+    variables: <String, dynamic>{
+      'conversation_id': conversation_id,
+      'uid': uid,
+    },
+  );
+}
+
+Query getNewestPostsReq(
   String foroID,
   String uid,
 ) {
@@ -240,7 +293,7 @@ Query getNewestPosts(
   );
 }
 
-Query getOldestPosts(
+Query getOldestPostsReq(
   String foroID,
   String uid,
 ) {
@@ -253,7 +306,7 @@ Query getOldestPosts(
   );
 }
 
-Query getMostLikedPosts(
+Query getMostLikedPostsReq(
   String foroID,
   String uid,
 ) {
@@ -266,7 +319,7 @@ Query getMostLikedPosts(
   );
 }
 
-Query getMostCommentedPots(
+Query getMostCommentedPotsReq(
   String foroID,
   String uid,
 ) {
@@ -279,7 +332,7 @@ Query getMostCommentedPots(
   );
 }
 
-Query getPostComments(
+Query getPostCommentsReq(
   String foroID,
   String postID,
 ) {
@@ -292,7 +345,7 @@ Query getPostComments(
   );
 }
 
-Query getUserProfile(
+Query getUserProfileReq(
   String uid,
 ) {
   return Query(
@@ -324,14 +377,13 @@ const postFieldsRawFragment = ''' fragment postFields on posts_view {
   foroID: foro_id
   reactionsCount: reactions_count
   commentsCount: comments_count
-  creator {
-   $profileRawFragment
+  creator : creator {
+   ...profile
   }
-  # TODO: change reaction to a computed field to flatten the query 
-  reaction: reactions_to_post(where: {uid: {_eq: \$uid}}) {
-    reaction
-  }
-} 
+  # computed field basd on x-hasura-user-id
+  reaction : user_reaction_to_post
+}
+$profileRawFragment 
 ''';
 
 // --------------------------------------------------------- MUTATIONS
@@ -339,17 +391,19 @@ const postFieldsRawFragment = ''' fragment postFields on posts_view {
 const updateProfilePhotoURLRawMutation =
     ''' mutation  updateProfilePhotoURL(\$uid: String!, \$photo_url: String!) {
   update_users_by_pk(pk_columns: {uid: \$uid}, _set: {photo_url: \$photo_url}) {
-   $profileRawFragment
+   ...profile
   }
-} 
+}
+$profileRawFragment 
 ''';
 
 const updateProfileDisplayNameRawMutation =
     ''' mutation updateProfileDisplayName(\$uid: String!, \$display_name: String!) {
   update_users_by_pk(pk_columns: {uid: \$uid}, _set: {display_name: \$display_name}) {
-   $profileRawFragment
+   ...profile
   }
-} 
+}
+$profileRawFragment 
 ''';
 
 // role is not returned here and should be added on the client of the request is successful
@@ -389,22 +443,19 @@ const leaveForoRawMutation =
 const updateForoPhotoURLRawMutation =
     ''' mutation updateForoPhotoURL(\$foroID: String!, \$photo_url: String!) {
   update_foros_by_pk(pk_columns: {foro_id: \$foroID}, _set: {photo_url: \$photo_url}) {
-   $profileRawFragment
+   ...profile
   }
-} 
+}
+$profileRawFragment 
 ''';
 
 const updateForoDisplayNameRawMutation =
     ''' mutation updateForoDisplayName(\$foroID: String!, \$display_name: String!) {
   update_foros_by_pk(pk_columns: {foro_id: \$foroID}, _set: {display_name: \$display_name}) {
-   $profileRawFragment
+   ...profile
   }
-} 
-''';
-
-const someQueryWithoutArgumentsRawQuery = ''' query someQueryWithoutArguments  {
-
-} 
+}
+$profileRawFragment 
 ''';
 
 const createPostRawMutation =
@@ -442,7 +493,7 @@ const createCommentRawMutation =
 
 // TODO: delete comment
 
-// TODO: react to post
+// react to post
 
 const reactToPostRawMutation =
     ''' mutation reactToPost(\$foro_id: String!, \$post_id: String!, \$reaction: String! = "like", \$uid: String!) {
@@ -457,7 +508,7 @@ const reactToPostRawMutation =
 } 
 ''';
 
-// TODO: unreact to post
+//  unreact to post
 
 const unReactToPostRawMutation =
     ''' mutation unReactToPost(\$foro_id: String!, \$post_id: String!, \$uid: String!) {
@@ -467,12 +518,7 @@ const unReactToPostRawMutation =
 } 
 ''';
 
-const whatAqueryRawQuery = ''' query whatAquery { 
-
-} 
-''';
-
-// TODO: react to comment
+// react to comment
 
 const reactToCommentRawMutation =
     ''' mutation reactToComment(\$foro_id: String!, \$post_id: String!, \$comment_id: String!, \$reaction: String! = "like", \$uid: String!) {
@@ -487,7 +533,7 @@ const reactToCommentRawMutation =
 } 
 ''';
 
-// TODO: unreact to comment
+// unreact to comment
 
 const unReactToCommentRawMutation =
     ''' mutation unReactToComment(\$foro_id: String!, \$post_id: String!, \$comment_id: String!, \$uid: String!) {
@@ -497,7 +543,31 @@ const unReactToCommentRawMutation =
 } 
 ''';
 
-// TODO: send message
+// create conversation
+
+const createConversationRawMutation =
+    ''' mutation createConversation(\$receiver_uid: String!, \$sender_uid: String!) {
+  insert_stub_create_conversation_one(object: {sender_uid: \$sender_uid, receiver_uid: \$receiver_uid}) {
+    conversation_id
+    receiver_uid
+    sender_uid
+  }
+} 
+''';
+
+// send message
+
+const sendMessageRawMutation =
+    ''' mutation sendMessage(\$content: String!, \$conversation_id: String!, \$sender_uid: String!, \$parent_id: String = null,) {
+  insert_messages_one(object: {content: \$content, conversation_id: \$conversation_id, sender_uid: \$sender_uid, parent_id: \$parent_id,}) {
+    content
+    conversation_id
+    message_id
+    parent_id
+    sender_uid
+  }
+} 
+''';
 
 // --------------------------------------------------------- QUERIES
 
@@ -517,46 +587,81 @@ const getJoinedForosRawQuery = ''' query getJoinedForos(\$uid: String!) {
 
 // TODO: currentUserDataStream
 
-/* single line comment */
+// -------- Convos and Messages
 
-/* example input data 
-{
-    "foro_id": "01EVV6HFZBSE4RM2MKTSJ7C500"
-    "created_by": "uid",
-    "post_content":"some content",
-}
-*/
+// get conversation ID
+
+const getConversationIDRawQuery =
+    ''' query getConversationID(\$uid1: String!, \$uid2: String!) {
+  get_conversation_id(args: {uid1: \$uid1, uid2: \$uid2}) {
+    conversationID : result
+  }
+} 
+''';
+
+// get convos -- postgres requires to order by the distinct field first, maybe find an efficient way to get latest convos (instead of creating an index for conversation_id plus created_at)
+
+const getConvosRawQuery = ''' query getConvos(\$uid: String!) {
+  messages: messages_view(distinct_on: conversation_id, where: {uid: {_eq: \$uid}}, order_by: {conversation_id: asc, created_at: desc}) {
+    conversationID: conversation_id
+    messageContent: content
+    creationTime: created_at
+    isRead: is_read
+    senderUID: sender_uid
+  }
+} 
+''';
+
+// get messages (or should we just query messages_status based on convo_id and uid)
+
+const getMessagesRawQuery =
+    ''' query getMessages(\$conversation_id: String!, \$uid: String!) {
+  messages: messages_view(where: {_and: {conversation_id: {_eq: \$conversation_id}, uid: {_eq: \$uid}}}) {
+    conversationID: conversation_id
+    messageContent: content
+    creationTime: created_at
+    isRead: is_read
+    senderUID: sender_uid
+  }
+} 
+''';
+
+// -------- Posts
 
 const getNewestPostsRawQuery =
     ''' query getNewestPosts(\$foroID: String!, \$uid: String!) {
   posts: posts_view(where: {foro_id: {_eq: \$foroID}}, order_by: {created_at: asc}) {
-    $postFieldsRawFragment
+    ...postFields
   }
-} 
+}
+$postFieldsRawFragment 
 ''';
 
 const getOldestPostsRawQuery =
     ''' query getOldestPosts(\$foroID: String!, \$uid: String!) {
   posts: posts_view(where: {foro_id: {_eq: \$foroID}}, order_by: {created_at: desc}) {
-    $postFieldsRawFragment
+    ...postFields
   }
-} 
+}
+$postFieldsRawFragment 
 ''';
 
 const getMostLikedPostsRawQuery =
     ''' query getMostLikedPosts(\$foroID: String!, \$uid: String!) {
   posts: posts_view(where: {foro_id: {_eq: \$foroID}}, order_by: {reactions_count: desc}) {
-    $postFieldsRawFragment
+    ...postFields
   }
-} 
+}
+$postFieldsRawFragment 
 ''';
 
 const getMostCommentedPotsRawQuery =
     ''' query getMostCommentedPots(\$foroID: String!, \$uid: String!) {
   posts: posts_view(where: {foro_id: {_eq: \$foroID}}, order_by: {comments_count: desc}) {
-    $postFieldsRawFragment
+    ...postFields
   }
-} 
+}
+$postFieldsRawFragment 
 ''';
 
 /* variable example:
@@ -566,7 +671,8 @@ const getMostCommentedPotsRawQuery =
   "comment_content": "some content",
   "created_by": "uid"
 }
-*/
+
+ */
 
 const getPostCommentsRawQuery =
     ''' query getPostComments(\$foroID: String!, \$postID: String!) {
@@ -575,10 +681,11 @@ const getPostCommentsRawQuery =
     reactionsCount : reactions_count
     commentContent:comment_content
     creator {
-      $profileRawFragment
+      ...profile
     }
   }
-} 
+}
+$profileRawFragment 
 ''';
 
 // ---------- Profile

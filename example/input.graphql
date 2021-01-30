@@ -16,17 +16,14 @@ fragment postFields on posts_view {
   foroID: foro_id
   reactionsCount: reactions_count
   commentsCount: comments_count
-  creator {
+  creator : creator {
    ...profile
   }
-  # TODO: change reaction to a computed field to flatten the query 
-  reaction: reactions_to_post(where: {uid: {_eq: $uid}}) {
-    reaction
-  }
+  # computed field basd on x-hasura-user-id
+  reaction : user_reaction_to_post
 }
 
 # --------------------------------------------------------- MUTATIONS
-
 
 
 mutation  updateProfilePhotoURL($uid: String!, $photo_url: String!) {
@@ -84,11 +81,6 @@ mutation updateForoDisplayName($foroID: String!, $display_name: String!) {
   }
 }
 
-query someQueryWithoutArguments  {
-
-}
-
-
 
 mutation createPost($post_content: String!, $created_by: String!, $foro_id: String!) {
   insert_posts_one(object: {post_content: $post_content, created_by: $created_by, foro_id: $foro_id}) {
@@ -130,7 +122,7 @@ mutation createComment($comment_content: String!, $created_by: String!, $foro_id
 
 
 
-# TODO: react to post  
+# react to post  
 
 mutation reactToPost($foro_id: String!, $post_id: String!, $reaction: String! = "like", $uid: String!) {
   insert_posts_reactions_one(object: {uid: $uid, foro_id: $foro_id, post_id: $post_id, reaction: $reaction}) {
@@ -143,19 +135,16 @@ mutation reactToPost($foro_id: String!, $post_id: String!, $reaction: String! = 
   }
 }
 
-# TODO: unreact to post  
+#  unreact to post  
 mutation unReactToPost($foro_id: String!, $post_id: String!, $uid: String!) {
   delete_posts_reactions(where: {_and: {foro_id: {_eq: $foro_id}, post_id: {_eq: $post_id}, uid: {_eq: $uid}}}) {
     affected_rows
   }
 }
 
-query whatAquery { 
-
-}
 
 
-# TODO: react to comment
+# react to comment
 mutation reactToComment($foro_id: String!, $post_id: String!, $comment_id: String!, $reaction: String! = "like", $uid: String!) {
   insert_comments_reactions_one(object: {uid: $uid, foro_id: $foro_id, post_id: $post_id, comment_id: $comment_id, reaction: $reaction}) {
     uid
@@ -167,7 +156,7 @@ mutation reactToComment($foro_id: String!, $post_id: String!, $comment_id: Strin
   }
 }
 
-# TODO: unreact to comment   
+# unreact to comment   
 mutation unReactToComment($foro_id: String!, $post_id: String!, $comment_id: String!, $uid: String!) {
   delete_comments_reactions(where: {_and: {foro_id: {_eq: $foro_id}, post_id: {_eq: $post_id}, comment_id: {_eq: $comment_id}, uid: {_eq: $uid}}}) {
     affected_rows
@@ -175,8 +164,27 @@ mutation unReactToComment($foro_id: String!, $post_id: String!, $comment_id: Str
 }
 
 
+# create conversation 
+mutation createConversation($receiver_uid: String!, $sender_uid: String!) {
+  insert_stub_create_conversation_one(object: {sender_uid: $sender_uid, receiver_uid: $receiver_uid}) {
+    conversation_id
+    receiver_uid
+    sender_uid
+  }
+}
 
-# TODO: send message
+
+# send message
+mutation sendMessage($content: String!, $conversation_id: String!, $sender_uid: String!, $parent_id: String = null,) {
+  insert_messages_one(object: {content: $content, conversation_id: $conversation_id, sender_uid: $sender_uid, parent_id: $parent_id,}) {
+    content
+    conversation_id
+    message_id
+    parent_id
+    sender_uid
+  }
+}
+
 
 
 
@@ -202,17 +210,43 @@ query getJoinedForos($uid: String!) {
 
 # TODO: currentUserDataStream
 
-""" single line comment """
+
+# -------- Convos and Messages
 
 
-""" example input data 
-{
-    "foro_id": "01EVV6HFZBSE4RM2MKTSJ7C500"
-    "created_by": "uid",
-    "post_content":"some content",
+# get conversation ID 
+query getConversationID($uid1: String!, $uid2: String!) {
+  get_conversation_id(args: {uid1: $uid1, uid2: $uid2}) {
+    conversationID : result
+  }
 }
-"""
 
+
+# get convos -- postgres requires to order by the distinct field first, maybe find an efficient way to get latest convos (instead of creating an index for conversation_id plus created_at)
+query getConvos($uid: String!) {
+  messages: messages_view(distinct_on: conversation_id, where: {uid: {_eq: $uid}}, order_by: {conversation_id: asc, created_at: desc}) {
+    conversationID: conversation_id
+    messageContent: content
+    creationTime: created_at
+    isRead: is_read
+    senderUID: sender_uid
+  }
+}
+
+
+
+# get messages (or should we just query messages_status based on convo_id and uid)
+query getMessages($conversation_id: String!, $uid: String!) {
+  messages: messages_view(where: {_and: {conversation_id: {_eq: $conversation_id}, uid: {_eq: $uid}}}) {
+    conversationID: conversation_id
+    messageContent: content
+    creationTime: created_at
+    isRead: is_read
+    senderUID: sender_uid
+  }
+}
+
+# -------- Posts
 
 
 query getNewestPosts($foroID: String!, $uid: String!) {
@@ -248,7 +282,8 @@ query getMostCommentedPots($foroID: String!, $uid: String!) {
   "comment_content": "some content",
   "created_by": "uid"
 }
-"""
+
+ """
 
 
 query getPostComments($foroID: String!, $postID: String!) {

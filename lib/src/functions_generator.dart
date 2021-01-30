@@ -1,6 +1,5 @@
 import 'common.dart';
 import 'query_object.dart';
-
 // header for the @required key word
 const fileHeader = ''' 
 import 'package:meta/meta.dart';
@@ -33,7 +32,7 @@ String generateQueryFunctionWithArguments(Query query) {
   }
   return '''
   
-  Query $functionName($argumentsString) { 
+  Query ${functionName}Req($argumentsString) { 
      return Query(query: ${generateRawQueryName(query.name, query.type)}, variables: <String, dynamic>$variablesString,);
   }
   

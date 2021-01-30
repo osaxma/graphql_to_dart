@@ -50,10 +50,10 @@ class GraphQLToDartConverter {
 
     for (var match in matches) {
       final name = r'$' + generateRawQueryName(match.group(0), 'fragment');
-      rawQuery = rawQuery.replaceRange(match.start, match.end, name);
+     // add the fragement refrence at the bottom of the query 
+     rawQuery = rawQuery + '\n' + name;
     }
 
-    rawQuery = rawQuery.replaceAll('...', '');
 
     return rawQuery;
   }
