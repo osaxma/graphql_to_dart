@@ -16,11 +16,11 @@ class Argument {
   String defaultValue;
 
   Argument({
-    type,
+    String type,
     this.name,
     this.defaultValue,
   }) {
-    if (type == 'timestamptz') {
+    if (type.trim() == 'timestamptz') {
       this.type = 'DateTime';
     } else {
       this.type = type;
