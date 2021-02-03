@@ -53,10 +53,10 @@ class GraphQLParser {
   }
 
   Argument parseSingleArgument(String argument) {
-    final argumentName = queryArgumentName.firstMatch(argument).group(0);
-    final argumentType = queryArgumentType.firstMatch(argument).group(0);
+    final argumentName = queryArgumentName.firstMatch(argument).group(0).trim();
+    final argumentType = queryArgumentType.firstMatch(argument).group(0).trim();
     // default value can be null
-    final defaultValue = queryArgumentDefaultValue.firstMatch(argument)?.group(0);
+    final defaultValue = queryArgumentDefaultValue.firstMatch(argument)?.group(0)?.trim();
     return Argument(type: argumentType, name: argumentName, defaultValue: defaultValue);
   }
 }
