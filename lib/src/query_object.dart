@@ -16,8 +16,14 @@ class Argument {
   String defaultValue;
 
   Argument({
-    this.type,
+    type,
     this.name,
     this.defaultValue,
-  });
+  }) {
+    if (type == 'timestamptz') {
+      this.type = 'DateTime';
+    } else {
+      this.type = type;
+    }
+  }
 }
