@@ -8,6 +8,11 @@ import 'query.dart';
 // - for each argument, we extract the name and default value if exists 
 //
 // this way the lower we go, the more easier and confident we are about what to extract (ie easier regex)
+//
+// note:
+// - currently we are not doing anything with the default value except that we check if one exists
+//
+// - need to handle a way to figure out if the default value is nullable and put it as an optional argument in the output 
 
 class GraphQLParser {
   GraphQLParser();

@@ -31,14 +31,14 @@ String generateQueryFunctionWithArguments(Query query) {
     argumentsString = argumentsString + arg.type + ' ' + arg.name + ',';
     variablesString = variablesString + "'${arg.name}'" + ':' + arg.name + ',';
   }
-  // handle default values and add them as optional positional arguments
+  // handle default values and add them as optional named arguments
   if (argumentsWithDefaultValue.isNotEmpty) {
-    argumentsString = argumentsString + '[';
+    argumentsString = argumentsString + '{';
     for (var arg in argumentsWithDefaultValue) {
       argumentsString = argumentsString + arg.type + ' ' + arg.name + ',';
       variablesString = variablesString + "'${arg.name}'" + ':' + arg.name + ',';
     }
-    argumentsString = argumentsString + ']';
+    argumentsString = argumentsString + '}';
   }
 
   if (argumentsString.isNotEmpty) {
