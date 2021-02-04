@@ -2,8 +2,7 @@ import 'dart:io';
 import 'common.dart';
 import 'functions_generator.dart';
 import 'graphql_parser.dart';
-import 'query_object.dart';
-import 'util.dart';
+import 'query.dart';
 
 Future<void> convert_to_dart(File inputFile, File outputFile) async {
   var outputSink = outputFile.openWrite();

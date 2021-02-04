@@ -1,5 +1,5 @@
 import 'common.dart';
-import 'query_object.dart';
+import 'query.dart';
 
 // header for the @required key word
 const fileHeader = ''' 
@@ -14,7 +14,7 @@ class Query {
 
   Query({@required this.query, Map<String, dynamic> variables})
       // to handle default values that passed as null
-      : variables = variables.removeWhere((key, value) => value == null);
+      : variables = variables..removeWhere((key, value) => value == null);
 }
 ''';
 

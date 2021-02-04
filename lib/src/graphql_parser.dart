@@ -1,4 +1,5 @@
-import 'query_object.dart';
+import 'argument.dart';
+import 'query.dart';
 
 class GraphQLParser {
   GraphQLParser();
