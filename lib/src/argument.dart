@@ -17,7 +17,9 @@ class Argument {
     if (type == 'timestamptz') {
       this.type = 'String';
     } else if (type == 'Int') {
-       this.type = 'int';
+      this.type = 'int';
+    } else if (type == 'order_by') {
+      this.type = 'String';
     } else {
       this.type = type;
     }

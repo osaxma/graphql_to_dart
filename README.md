@@ -10,12 +10,45 @@ You can add the format flag to format the dart output file (uses `dart format`):
 dart bin/main.dart -s path/to/input/file.graphql -o path/to/output/file.dart -f 
 ```
 
-### currently supported types:
+### currently supported queries:
 - query
 - mutation
 - subscription 
 - fragment 
 
+### currently supported types:
+- String
+- Int
+- Timestamptz
+
+### Important
+While block comments are recognized by the converter, you must not put any of the supported query inside a block comment like this:
+```graphql
+"""
+query heroComparison($first: Int = 3) {
+  leftComparison: hero(episode: EMPIRE) {
+    ...comparisonFields
+  }
+  # comment inside a query
+  rightComparison: hero(episode: JEDI) {
+    ...comparisonFields
+  }
+}
+"""
+```
+to avoid any issues, make them line comments such in:
+
+```graphql
+# query heroComparison($first: Int = 3) {
+#   leftComparison: hero(episode: EMPIRE) {
+#     ...comparisonFields
+#   }
+#   # comment inside a query
+#   rightComparison: hero(episode: JEDI) {
+#     ...comparisonFields
+#   }
+# }
+```
 
 ### example 
 Input graphql file:

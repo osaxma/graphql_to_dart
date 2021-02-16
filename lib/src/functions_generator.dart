@@ -1,23 +1,6 @@
 import 'common.dart';
 import 'query.dart';
 
-// header for the @required key word
-const fileHeader = ''' 
-import 'package:meta/meta.dart';
-''';
-
-// a class represneting the query
-const queryClassOutput = ''' 
-class Query {
-  final String query;
-  final Map<String, dynamic> variables;
-
-  Query({@required this.query, Map<String, dynamic> variables})
-      // to handle default values that passed as null
-      : variables = variables..removeWhere((key, value) => value == null);
-}
-''';
-
 String generateQueryFunctionWithArguments(Query query) {
   final functionName = query.name;
   final argumentsWithDefaultValue = [];
