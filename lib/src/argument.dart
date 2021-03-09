@@ -14,12 +14,15 @@ class Argument {
     // - it cannot be added as a default argument since it's not const (e.g. DateTime.parse(default value) != const)
     // - the DateTime needs to be converted using toIso8601String().
     // - null cases need to be handled too
-    if (type == 'timestamptz') {
+    // todo add non-nullable type once supported.
+    if (type == 'timestamptz' || type == 'timestamptz!') {
       this.type = 'String';
-    } else if (type == 'Int') {
+    } else if (type == 'Int' || type == 'Int!') {
       this.type = 'int';
-    } else if (type == 'order_by') {
+    } else if (type == 'order_by' || type == 'order_by!') {
       this.type = 'String';
+    } else if (type == 'Boolean' || type == 'Boolean!') {
+      this.type = 'bool';
     } else {
       this.type = type;
     }
