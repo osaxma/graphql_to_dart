@@ -3,17 +3,17 @@ import 'query.dart';
 import 'regex.dart';
 
 // The approach here is like a funnel:
-// - capture the entire queries (i.e. extractQueries) 
+// - capture the entire queries (i.e. extractQueries)
 // - In buildQuery, extract the name, and the arguments string
 // - In parseQueryArguments, we extract each argument separately
-// - for each argument, we extract the name and default value if exists 
+// - for each argument, we extract the name and default value if exists
 //
 // this way the lower we go, the more easier and confident we are about what to extract (ie easier regex)
 //
 // note:
 // - currently we are not doing anything with the default value except that we check if one exists
 //
-// - need to handle a way to figure out if the default value is nullable and put it as an optional argument in the output 
+// - need to handle a way to figure out if the default value is nullable and put it as an optional argument in the output
 
 class GraphQLParser {
   GraphQLParser();
@@ -68,11 +68,17 @@ class GraphQLParser {
   }
 
   Argument _parseSingleArgument(String argument) {
+    final isNullable = !argument.contains('!');
     final argumentName = queryArgumentName.firstMatch(argument).group(0).trim();
     final argumentType = queryArgumentType.firstMatch(argument).group(0).trim();
     // default value can be null
     // 'queryArgumentDefaultValue' captures double quotes and whitespace if there's a default value so they need to be removed
     final defaultValue = queryArgumentDefaultValue.firstMatch(argument)?.group(0)?.trim()?.replaceAll('"', '');
-    return Argument(type: argumentType, name: argumentName, defaultValue: defaultValue);
+    return Argument(
+      type: argumentType,
+      name: argumentName,
+      defaultValue: defaultValue,
+      isNullable: isNullable,
+    );
   }
 }

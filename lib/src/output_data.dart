@@ -1,7 +1,10 @@
 
-// header for the @required key word
+// any headers to be added at the top of the generated file.
 const fileHeader = ''' 
-import 'package:meta/meta.dart';
+//
+// Generated file. Do not edit.
+//
+
 ''';
 
 // a class represneting the query
@@ -10,7 +13,7 @@ class Query {
   final String query;
   final Map<String, dynamic> variables;
 
-  Query({@required this.query, Map<String, dynamic> variables})
+  Query({required this.query, Map<String, dynamic> variables = const {}})
       // to handle default values that passed as null
       : variables = variables..removeWhere((key, value) => value == null);
 }
