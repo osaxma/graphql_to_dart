@@ -8,7 +8,7 @@ const fileHeader = '''
 ''';
 
 // a class represneting the query
-const queryClassOutput = ''' 
+const queryClassOutput = r''' 
 class Query {
   final String query;
   final Map<String, dynamic> variables;
@@ -16,6 +16,11 @@ class Query {
   Query({required this.query, Map<String, dynamic> variables = const {}})
       // to handle default values that passed as null
       : variables = variables..removeWhere((key, value) => value == null);
+  
+  @override
+  String toString() {
+    return 'operation:\n$query\nvariables:\n$variables';
+  }
 }
 ''';
 
