@@ -2,4 +2,5 @@ import 'util.dart';
 
 final queryPostfix = 'Raw';
 
-String generateRawQueryName(String name, String type) => name + queryPostfix + type.toUpperCaseFirst();
+// raw query are made private to the file so they don't pollute autocompletion
+String generateRawQueryName(String name, String type) => '_' + name + queryPostfix + type.toUpperCaseFirst();
