@@ -1,10 +1,12 @@
 
 // any headers to be added at the top of the generated file.
+// TODO: convert any names_with_underscore to lowerCaseCamel
 const fileHeader = ''' 
 //
 // Generated file. Do not edit.
 //
-
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: non_constant_identifier_names
 ''';
 
 // a class represneting the query
