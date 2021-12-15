@@ -5,12 +5,12 @@ import 'raw_query_converter.dart';
 import 'functions_generator.dart';
 import 'graphql_parser.dart';
 
-Future<void> convert_to_dart(File inputFile, File outputFile) async {
-  var outputSink = outputFile.openWrite();
+Future<void> convertToDart(File inputFile, File outputFile) async {
+  final outputSink = outputFile.openWrite();
 
   final data = inputFile.readAsStringSync();
 
-  final queries = GraphQLParser().extractQueries(data); // extractQueries(data);
+  final queries = GraphQLParser().extractQueries(data);
   final dartConverter = RawQueryGenerator();
 
   outputSink.write(fileHeader);
