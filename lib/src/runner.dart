@@ -89,8 +89,10 @@ Usage: graphql_to_dart [arguments]
 
   // ------------------------------------------------------------------ Format Output
   if (argResults['format']) {
-    await formatFile(outputFile);
+    formatFile(outputFile);
   }
+
+  print('Done! output file located at:\n  ${outputFile.absolute.path}');
 }
 
 File? makeCopyIfFileExists(File fileToCopy) {
