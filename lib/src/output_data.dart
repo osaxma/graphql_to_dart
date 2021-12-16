@@ -5,8 +5,6 @@ const fileHeader = '''
 //
 // Generated file. Do not edit.
 //
-// ignore_for_file: constant_identifier_names
-// ignore_for_file: non_constant_identifier_names
 ''';
 
 // a class represneting the query
@@ -33,19 +31,19 @@ class SortOrder {
 static const asc = 'asc';
 
 /// in the ascending order, nulls first
-static const asc_nulls_first = 'asc_nulls_first';
+static const ascNullsFirst = 'asc_nulls_first';
 
 /// in the ascending order, nulls last
-static const asc_nulls_last = 'asc_nulls_last';
+static const ascNullsLast = 'asc_nulls_last';
 
 /// in the descending order, nulls first
 static const desc = 'desc';
 
 /// in the descending order, nulls first
-static const desc_nulls_first = 'desc_nulls_first';
+static const descNullsFirst = 'desc_nulls_first';
 
 /// in the descending order, nulls last
-static const desc_nulls_last = 'desc_nulls_last';
+static const descNullsLast = 'desc_nulls_last';
 }
 
 ''';

@@ -1,9 +1,12 @@
+import 'package:graphql_to_dart/src/argument.dart';
+import 'package:graphql_to_dart/src/util.dart';
+
 import 'common.dart';
 import 'query.dart';
 
 String generateQueryFunctionWithArguments(Query query) {
   final functionName = query.name;
-  final argumentsWithDefaultValue = [];
+  final argumentsWithDefaultValue = <Argument>[];
   var variablesString = '';
   var argumentsString = '';
   for (var arg in query.arguments) {
@@ -11,15 +14,15 @@ String generateQueryFunctionWithArguments(Query query) {
       argumentsWithDefaultValue.add(arg);
       continue;
     }
-    argumentsString = argumentsString + arg.type + ' ' + arg.name + ',';
-    variablesString = variablesString + "'${arg.name}'" + ':' + arg.name + ',';
+    argumentsString = argumentsString + arg.type + ' ' + arg.name.toLowerCaseCamel() + ',';
+    variablesString = variablesString + "'${arg.name}'" + ':' + arg.name.toLowerCaseCamel() + ',';
   }
   // handle default values and add them as optional named arguments
   if (argumentsWithDefaultValue.isNotEmpty) {
     argumentsString = argumentsString + '{';
     for (var arg in argumentsWithDefaultValue) {
-      argumentsString = argumentsString + arg.type + ' ' + arg.name + ',';
-      variablesString = variablesString + "'${arg.name}'" + ':' + arg.name + ',';
+      argumentsString = argumentsString + arg.type + ' ' + arg.name.toLowerCaseCamel() + ',';
+      variablesString = variablesString + "'${arg.name}'" + ':' + arg.name.toLowerCaseCamel() + ',';
     }
     argumentsString = argumentsString + '}';
   }

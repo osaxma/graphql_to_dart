@@ -13,7 +13,13 @@ extension FirstLetterCase on String {
   /// this will remove extra spaces (i.e., > 1 space in sequence);
   String removeExtraSpace() => replaceAll(RegExp(r'\s{2,}'), ' ');
 
-// not tested
-/// this will remove extra spaces (i.e., > 1 space in sequence);
-// String removeExtraWhiteSpaces() => replaceAll(RegExp(r'\s+', multiLine: true), ' ');
+  String toLowerCaseCamel() {
+    if (!contains('_')) return this;
+
+    return split('_').reduce((value, element) => value + element.toUpperCaseFirst());
+  }
+
+  // not tested
+  /// this will remove extra spaces (i.e., > 1 space in sequence);
+  // String removeExtraWhiteSpaces() => replaceAll(RegExp(r'\s+', multiLine: true), ' ');
 }
