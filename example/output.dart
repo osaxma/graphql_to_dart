@@ -1,364 +1,43 @@
-import 'package:meta/meta.dart';
-
+//
+// Generated file. Do not edit.
+//
 class Query {
   final String query;
   final Map<String, dynamic> variables;
 
-  const Query({@required this.query, @required this.variables});
+  Query({required this.query, Map<String, dynamic> variables = const {}})
+      // to handle default values that passed as null
+      : variables = variables..removeWhere((key, value) => value == null);
+
+  @override
+  String toString() {
+    return 'operation:\n$query\nvariables:\n$variables';
+  }
 }
 
-Query updateProfilePhotoURLReq(
-  String uid,
-  String photo_url,
-) {
-  return Query(
-    query: updateProfilePhotoURLRawMutation,
-    variables: <String, dynamic>{
-      'uid': uid,
-      'photo_url': photo_url,
-    },
-  );
-}
+class SortOrder {
+  /// in the ascending order, nulls last
+  static const asc = 'asc';
 
-Query updateProfileDisplayNameReq(
-  String uid,
-  String display_name,
-) {
-  return Query(
-    query: updateProfileDisplayNameRawMutation,
-    variables: <String, dynamic>{
-      'uid': uid,
-      'display_name': display_name,
-    },
-  );
-}
+  /// in the ascending order, nulls first
+  static const ascNullsFirst = 'asc_nulls_first';
 
-Query createForoReq(
-  String display_name,
-  String photo_url,
-  String created_by,
-  String category,
-) {
-  return Query(
-    query: createForoRawMutation,
-    variables: <String, dynamic>{
-      'display_name': display_name,
-      'photo_url': photo_url,
-      'created_by': created_by,
-      'category': category,
-    },
-  );
-}
+  /// in the ascending order, nulls last
+  static const ascNullsLast = 'asc_nulls_last';
 
-Query joinForoReq(
-  String uid,
-  String foroID,
-) {
-  return Query(
-    query: joinForoRawMutation,
-    variables: <String, dynamic>{
-      'uid': uid,
-      'foroID': foroID,
-    },
-  );
-}
+  /// in the descending order, nulls first
+  static const desc = 'desc';
 
-Query leaveForoReq(
-  String uid,
-  String foroID,
-) {
-  return Query(
-    query: leaveForoRawMutation,
-    variables: <String, dynamic>{
-      'uid': uid,
-      'foroID': foroID,
-    },
-  );
-}
+  /// in the descending order, nulls first
+  static const descNullsFirst = 'desc_nulls_first';
 
-Query updateForoPhotoURLReq(
-  String foroID,
-  String photo_url,
-) {
-  return Query(
-    query: updateForoPhotoURLRawMutation,
-    variables: <String, dynamic>{
-      'foroID': foroID,
-      'photo_url': photo_url,
-    },
-  );
-}
-
-Query updateForoDisplayNameReq(
-  String foroID,
-  String display_name,
-) {
-  return Query(
-    query: updateForoDisplayNameRawMutation,
-    variables: <String, dynamic>{
-      'foroID': foroID,
-      'display_name': display_name,
-    },
-  );
-}
-
-Query createPostReq(
-  String post_content,
-  String created_by,
-  String foro_id,
-) {
-  return Query(
-    query: createPostRawMutation,
-    variables: <String, dynamic>{
-      'post_content': post_content,
-      'created_by': created_by,
-      'foro_id': foro_id,
-    },
-  );
-}
-
-Query createCommentReq(
-  String comment_content,
-  String created_by,
-  String foro_id,
-  String post_id,
-) {
-  return Query(
-    query: createCommentRawMutation,
-    variables: <String, dynamic>{
-      'comment_content': comment_content,
-      'created_by': created_by,
-      'foro_id': foro_id,
-      'post_id': post_id,
-    },
-  );
-}
-
-Query reactToPostReq(
-  String foro_id,
-  String post_id,
-  String reaction,
-  String uid,
-) {
-  return Query(
-    query: reactToPostRawMutation,
-    variables: <String, dynamic>{
-      'foro_id': foro_id,
-      'post_id': post_id,
-      'reaction': reaction,
-      'uid': uid,
-    },
-  );
-}
-
-Query unReactToPostReq(
-  String foro_id,
-  String post_id,
-  String uid,
-) {
-  return Query(
-    query: unReactToPostRawMutation,
-    variables: <String, dynamic>{
-      'foro_id': foro_id,
-      'post_id': post_id,
-      'uid': uid,
-    },
-  );
-}
-
-Query reactToCommentReq(
-  String foro_id,
-  String post_id,
-  String comment_id,
-  String reaction,
-  String uid,
-) {
-  return Query(
-    query: reactToCommentRawMutation,
-    variables: <String, dynamic>{
-      'foro_id': foro_id,
-      'post_id': post_id,
-      'comment_id': comment_id,
-      'reaction': reaction,
-      'uid': uid,
-    },
-  );
-}
-
-Query unReactToCommentReq(
-  String foro_id,
-  String post_id,
-  String comment_id,
-  String uid,
-) {
-  return Query(
-    query: unReactToCommentRawMutation,
-    variables: <String, dynamic>{
-      'foro_id': foro_id,
-      'post_id': post_id,
-      'comment_id': comment_id,
-      'uid': uid,
-    },
-  );
-}
-
-Query createConversationReq(
-  String receiver_uid,
-  String sender_uid,
-) {
-  return Query(
-    query: createConversationRawMutation,
-    variables: <String, dynamic>{
-      'receiver_uid': receiver_uid,
-      'sender_uid': sender_uid,
-    },
-  );
-}
-
-Query sendMessageReq(
-  String content,
-  String conversation_id,
-  String sender_uid,
-  String parent_id,
-) {
-  return Query(
-    query: sendMessageRawMutation,
-    variables: <String, dynamic>{
-      'content': content,
-      'conversation_id': conversation_id,
-      'sender_uid': sender_uid,
-      'parent_id': parent_id,
-    },
-  );
-}
-
-Query getJoinedForosReq(
-  String uid,
-) {
-  return Query(
-    query: getJoinedForosRawQuery,
-    variables: <String, dynamic>{
-      'uid': uid,
-    },
-  );
-}
-
-Query getConversationIDReq(
-  String uid1,
-  String uid2,
-) {
-  return Query(
-    query: getConversationIDRawQuery,
-    variables: <String, dynamic>{
-      'uid1': uid1,
-      'uid2': uid2,
-    },
-  );
-}
-
-Query getConvosReq(
-  String uid,
-) {
-  return Query(
-    query: getConvosRawQuery,
-    variables: <String, dynamic>{
-      'uid': uid,
-    },
-  );
-}
-
-Query getMessagesReq(
-  String conversation_id,
-  String uid,
-) {
-  return Query(
-    query: getMessagesRawQuery,
-    variables: <String, dynamic>{
-      'conversation_id': conversation_id,
-      'uid': uid,
-    },
-  );
-}
-
-Query getNewestPostsReq(
-  String foroID,
-  String uid,
-) {
-  return Query(
-    query: getNewestPostsRawQuery,
-    variables: <String, dynamic>{
-      'foroID': foroID,
-      'uid': uid,
-    },
-  );
-}
-
-Query getOldestPostsReq(
-  String foroID,
-  String uid,
-) {
-  return Query(
-    query: getOldestPostsRawQuery,
-    variables: <String, dynamic>{
-      'foroID': foroID,
-      'uid': uid,
-    },
-  );
-}
-
-Query getMostLikedPostsReq(
-  String foroID,
-  String uid,
-) {
-  return Query(
-    query: getMostLikedPostsRawQuery,
-    variables: <String, dynamic>{
-      'foroID': foroID,
-      'uid': uid,
-    },
-  );
-}
-
-Query getMostCommentedPotsReq(
-  String foroID,
-  String uid,
-) {
-  return Query(
-    query: getMostCommentedPotsRawQuery,
-    variables: <String, dynamic>{
-      'foroID': foroID,
-      'uid': uid,
-    },
-  );
-}
-
-Query getPostCommentsReq(
-  String foroID,
-  String postID,
-) {
-  return Query(
-    query: getPostCommentsRawQuery,
-    variables: <String, dynamic>{
-      'foroID': foroID,
-      'postID': postID,
-    },
-  );
-}
-
-Query getUserProfileReq(
-  String uid,
-) {
-  return Query(
-    query: getUserProfileRawQuery,
-    variables: <String, dynamic>{
-      'uid': uid,
-    },
-  );
+  /// in the descending order, nulls last
+  static const descNullsLast = 'desc_nulls_last';
 }
 
 // --------------------------------------------- fragments
 
-const profileRawFragment = ''' fragment profile on users {
+const _profileRawFragment = ''' fragment profile on users {
   uid
   photoURL: photo_url
   displayName : display_name
@@ -369,7 +48,7 @@ const profileRawFragment = ''' fragment profile on users {
 
 // something to note about this query, the reaction returns as a list :/
 
-const postFieldsRawFragment = ''' fragment postFields on posts_view {
+const _postFieldsRawFragment = ''' fragment postFields on posts_view {
   creationTime: created_at
   lastUpdatedTime: updated_at
   postID: post_id
@@ -383,32 +62,75 @@ const postFieldsRawFragment = ''' fragment postFields on posts_view {
   # computed field basd on x-hasura-user-id
   reaction : user_reaction_to_post
 }
-$profileRawFragment 
+$_profileRawFragment 
 ''';
+
+Query updateProfilePhotoURLReq(
+  String uid,
+  String photoUrl,
+) {
+  return Query(
+    query: _updateProfilePhotoURLRawMutation,
+    variables: <String, dynamic>{
+      'uid': uid,
+      'photo_url': photoUrl,
+    },
+  );
+}
 
 // --------------------------------------------------------- MUTATIONS
 
-const updateProfilePhotoURLRawMutation =
+const _updateProfilePhotoURLRawMutation =
     ''' mutation  updateProfilePhotoURL(\$uid: String!, \$photo_url: String!) {
   update_users_by_pk(pk_columns: {uid: \$uid}, _set: {photo_url: \$photo_url}) {
    ...profile
   }
 }
-$profileRawFragment 
+$_profileRawFragment 
 ''';
 
-const updateProfileDisplayNameRawMutation =
+Query updateProfileDisplayNameReq(
+  String uid,
+  String displayName,
+) {
+  return Query(
+    query: _updateProfileDisplayNameRawMutation,
+    variables: <String, dynamic>{
+      'uid': uid,
+      'display_name': displayName,
+    },
+  );
+}
+
+const _updateProfileDisplayNameRawMutation =
     ''' mutation updateProfileDisplayName(\$uid: String!, \$display_name: String!) {
   update_users_by_pk(pk_columns: {uid: \$uid}, _set: {display_name: \$display_name}) {
    ...profile
   }
 }
-$profileRawFragment 
+$_profileRawFragment 
 ''';
+
+Query createForoReq(
+  String displayName,
+  String photoUrl,
+  String createdBy, {
+  String? category,
+}) {
+  return Query(
+    query: _createForoRawMutation,
+    variables: <String, dynamic>{
+      'display_name': displayName,
+      'photo_url': photoUrl,
+      'created_by': createdBy,
+      'category': category,
+    },
+  );
+}
 
 // role is not returned here and should be added on the client of the request is successful
 
-const createForoRawMutation =
+const _createForoRawMutation =
     ''' mutation createForo(\$display_name: String!, \$photo_url: String!, \$created_by: String!, \$category: String = "others") {
   insert_foros_one(object: {display_name: \$display_name, photo_url: \$photo_url, created_by: \$created_by, category: \$category}) {
   category
@@ -422,7 +144,20 @@ const createForoRawMutation =
 } 
 ''';
 
-const joinForoRawMutation =
+Query joinForoReq(
+  String uid,
+  String foroID,
+) {
+  return Query(
+    query: _joinForoRawMutation,
+    variables: <String, dynamic>{
+      'uid': uid,
+      'foroID': foroID,
+    },
+  );
+}
+
+const _joinForoRawMutation =
     ''' mutation joinForo(\$uid: String!, \$foroID: String!) {
   insert_memberships_one(object: {foro_id: \$foroID, uid: \$uid}) {
     foroID : foro_id
@@ -430,7 +165,20 @@ const joinForoRawMutation =
 } 
 ''';
 
-const leaveForoRawMutation =
+Query leaveForoReq(
+  String uid,
+  String foroID,
+) {
+  return Query(
+    query: _leaveForoRawMutation,
+    variables: <String, dynamic>{
+      'uid': uid,
+      'foroID': foroID,
+    },
+  );
+}
+
+const _leaveForoRawMutation =
     ''' mutation leaveForo(\$uid: String!, \$foroID: String!) {
   delete_memberships(where: {foro_id: {_eq: \$foroID}, uid: {_eq: \$uid}}) {
     returning {
@@ -440,25 +188,66 @@ const leaveForoRawMutation =
 } 
 ''';
 
-const updateForoPhotoURLRawMutation =
+Query updateForoPhotoURLReq(
+  String foroID,
+  String photoUrl,
+) {
+  return Query(
+    query: _updateForoPhotoURLRawMutation,
+    variables: <String, dynamic>{
+      'foroID': foroID,
+      'photo_url': photoUrl,
+    },
+  );
+}
+
+const _updateForoPhotoURLRawMutation =
     ''' mutation updateForoPhotoURL(\$foroID: String!, \$photo_url: String!) {
   update_foros_by_pk(pk_columns: {foro_id: \$foroID}, _set: {photo_url: \$photo_url}) {
    ...profile
   }
 }
-$profileRawFragment 
+$_profileRawFragment 
 ''';
 
-const updateForoDisplayNameRawMutation =
+Query updateForoDisplayNameReq(
+  String foroID,
+  String displayName,
+) {
+  return Query(
+    query: _updateForoDisplayNameRawMutation,
+    variables: <String, dynamic>{
+      'foroID': foroID,
+      'display_name': displayName,
+    },
+  );
+}
+
+const _updateForoDisplayNameRawMutation =
     ''' mutation updateForoDisplayName(\$foroID: String!, \$display_name: String!) {
   update_foros_by_pk(pk_columns: {foro_id: \$foroID}, _set: {display_name: \$display_name}) {
    ...profile
   }
 }
-$profileRawFragment 
+$_profileRawFragment 
 ''';
 
-const createPostRawMutation =
+Query createPostReq(
+  String postContent,
+  String createdBy,
+  String foroId,
+) {
+  return Query(
+    query: _createPostRawMutation,
+    variables: <String, dynamic>{
+      'post_content': postContent,
+      'created_by': createdBy,
+      'foro_id': foroId,
+    },
+  );
+}
+
+const _createPostRawMutation =
     ''' mutation createPost(\$post_content: String!, \$created_by: String!, \$foro_id: String!) {
   insert_posts_one(object: {post_content: \$post_content, created_by: \$created_by, foro_id: \$foro_id}) {
     foroID : foro_id
@@ -471,11 +260,28 @@ const createPostRawMutation =
 } 
 ''';
 
+Query createCommentReq(
+  String commentContent,
+  String createdBy,
+  String foroId,
+  String postId,
+) {
+  return Query(
+    query: _createCommentRawMutation,
+    variables: <String, dynamic>{
+      'comment_content': commentContent,
+      'created_by': createdBy,
+      'foro_id': foroId,
+      'post_id': postId,
+    },
+  );
+}
+
 // TODO: update post
 
 // TODO: delete post
 
-const createCommentRawMutation =
+const _createCommentRawMutation =
     ''' mutation createComment(\$comment_content: String!, \$created_by: String!, \$foro_id: String!, \$post_id: String!) {
   insert_comments_one(object: {comment_content: \$comment_content, created_by: \$created_by, foro_id: \$foro_id, post_id: \$post_id}) {
     comment_content
@@ -489,13 +295,30 @@ const createCommentRawMutation =
 } 
 ''';
 
+Query reactToPostReq(
+  String foroId,
+  String postId,
+  String uid, {
+  String? reaction,
+}) {
+  return Query(
+    query: _reactToPostRawMutation,
+    variables: <String, dynamic>{
+      'foro_id': foroId,
+      'post_id': postId,
+      'uid': uid,
+      'reaction': reaction,
+    },
+  );
+}
+
 // TODO: update comment
 
 // TODO: delete comment
 
 // react to post
 
-const reactToPostRawMutation =
+const _reactToPostRawMutation =
     ''' mutation reactToPost(\$foro_id: String!, \$post_id: String!, \$reaction: String! = "like", \$uid: String!) {
   insert_posts_reactions_one(object: {uid: \$uid, foro_id: \$foro_id, post_id: \$post_id, reaction: \$reaction}) {
     uid
@@ -508,9 +331,24 @@ const reactToPostRawMutation =
 } 
 ''';
 
+Query unReactToPostReq(
+  String foroId,
+  String postId,
+  String uid,
+) {
+  return Query(
+    query: _unReactToPostRawMutation,
+    variables: <String, dynamic>{
+      'foro_id': foroId,
+      'post_id': postId,
+      'uid': uid,
+    },
+  );
+}
+
 //  unreact to post
 
-const unReactToPostRawMutation =
+const _unReactToPostRawMutation =
     ''' mutation unReactToPost(\$foro_id: String!, \$post_id: String!, \$uid: String!) {
   delete_posts_reactions(where: {_and: {foro_id: {_eq: \$foro_id}, post_id: {_eq: \$post_id}, uid: {_eq: \$uid}}}) {
     affected_rows
@@ -518,9 +356,28 @@ const unReactToPostRawMutation =
 } 
 ''';
 
+Query reactToCommentReq(
+  String foroId,
+  String postId,
+  String commentId,
+  String uid, {
+  String? reaction,
+}) {
+  return Query(
+    query: _reactToCommentRawMutation,
+    variables: <String, dynamic>{
+      'foro_id': foroId,
+      'post_id': postId,
+      'comment_id': commentId,
+      'uid': uid,
+      'reaction': reaction,
+    },
+  );
+}
+
 // react to comment
 
-const reactToCommentRawMutation =
+const _reactToCommentRawMutation =
     ''' mutation reactToComment(\$foro_id: String!, \$post_id: String!, \$comment_id: String!, \$reaction: String! = "like", \$uid: String!) {
   insert_comments_reactions_one(object: {uid: \$uid, foro_id: \$foro_id, post_id: \$post_id, comment_id: \$comment_id, reaction: \$reaction}) {
     uid
@@ -533,9 +390,26 @@ const reactToCommentRawMutation =
 } 
 ''';
 
+Query unReactToCommentReq(
+  String foroId,
+  String postId,
+  String commentId,
+  String uid,
+) {
+  return Query(
+    query: _unReactToCommentRawMutation,
+    variables: <String, dynamic>{
+      'foro_id': foroId,
+      'post_id': postId,
+      'comment_id': commentId,
+      'uid': uid,
+    },
+  );
+}
+
 // unreact to comment
 
-const unReactToCommentRawMutation =
+const _unReactToCommentRawMutation =
     ''' mutation unReactToComment(\$foro_id: String!, \$post_id: String!, \$comment_id: String!, \$uid: String!) {
   delete_comments_reactions(where: {_and: {foro_id: {_eq: \$foro_id}, post_id: {_eq: \$post_id}, comment_id: {_eq: \$comment_id}, uid: {_eq: \$uid}}}) {
     affected_rows
@@ -543,9 +417,22 @@ const unReactToCommentRawMutation =
 } 
 ''';
 
+Query createConversationReq(
+  String receiverUid,
+  String senderUid,
+) {
+  return Query(
+    query: _createConversationRawMutation,
+    variables: <String, dynamic>{
+      'receiver_uid': receiverUid,
+      'sender_uid': senderUid,
+    },
+  );
+}
+
 // create conversation
 
-const createConversationRawMutation =
+const _createConversationRawMutation =
     ''' mutation createConversation(\$receiver_uid: String!, \$sender_uid: String!) {
   insert_stub_create_conversation_one(object: {sender_uid: \$sender_uid, receiver_uid: \$receiver_uid}) {
     conversation_id
@@ -555,9 +442,26 @@ const createConversationRawMutation =
 } 
 ''';
 
+Query sendMessageReq(
+  String content,
+  String conversationId,
+  String senderUid, {
+  String? parentId,
+}) {
+  return Query(
+    query: _sendMessageRawMutation,
+    variables: <String, dynamic>{
+      'content': content,
+      'conversation_id': conversationId,
+      'sender_uid': senderUid,
+      'parent_id': parentId,
+    },
+  );
+}
+
 // send message
 
-const sendMessageRawMutation =
+const _sendMessageRawMutation =
     ''' mutation sendMessage(\$content: String!, \$conversation_id: String!, \$sender_uid: String!, \$parent_id: String = null,) {
   insert_messages_one(object: {content: \$content, conversation_id: \$conversation_id, sender_uid: \$sender_uid, parent_id: \$parent_id,}) {
     content
@@ -569,9 +473,20 @@ const sendMessageRawMutation =
 } 
 ''';
 
+Query getJoinedForosReq(
+  String uid,
+) {
+  return Query(
+    query: _getJoinedForosRawQuery,
+    variables: <String, dynamic>{
+      'uid': uid,
+    },
+  );
+}
+
 // --------------------------------------------------------- QUERIES
 
-const getJoinedForosRawQuery = ''' query getJoinedForos(\$uid: String!) {
+const _getJoinedForosRawQuery = ''' query getJoinedForos(\$uid: String!) {
   foros_memberships(where: {uid: {_eq: \$uid}}) {
   category
   foro_id: foro_id
@@ -583,6 +498,19 @@ const getJoinedForosRawQuery = ''' query getJoinedForos(\$uid: String!) {
 } 
 ''';
 
+Query getConversationIDReq(
+  String uid1,
+  String uid2,
+) {
+  return Query(
+    query: _getConversationIDRawQuery,
+    variables: <String, dynamic>{
+      'uid1': uid1,
+      'uid2': uid2,
+    },
+  );
+}
+
 // TODO: getForosForExplore
 
 // TODO: currentUserDataStream
@@ -591,7 +519,7 @@ const getJoinedForosRawQuery = ''' query getJoinedForos(\$uid: String!) {
 
 // get conversation ID
 
-const getConversationIDRawQuery =
+const _getConversationIDRawQuery =
     ''' query getConversationID(\$uid1: String!, \$uid2: String!) {
   get_conversation_id(args: {uid1: \$uid1, uid2: \$uid2}) {
     conversationID : result
@@ -599,9 +527,20 @@ const getConversationIDRawQuery =
 } 
 ''';
 
+Query getConvosReq(
+  String uid,
+) {
+  return Query(
+    query: _getConvosRawQuery,
+    variables: <String, dynamic>{
+      'uid': uid,
+    },
+  );
+}
+
 // get convos -- postgres requires to order by the distinct field first, maybe find an efficient way to get latest convos (instead of creating an index for conversation_id plus created_at)
 
-const getConvosRawQuery = ''' query getConvos(\$uid: String!) {
+const _getConvosRawQuery = ''' query getConvos(\$uid: String!) {
   messages: messages_view(distinct_on: conversation_id, where: {uid: {_eq: \$uid}}, order_by: {conversation_id: asc, created_at: desc}) {
     conversationID: conversation_id
     messageContent: content
@@ -612,9 +551,22 @@ const getConvosRawQuery = ''' query getConvos(\$uid: String!) {
 } 
 ''';
 
+Query getMessagesReq(
+  String conversationId,
+  String uid,
+) {
+  return Query(
+    query: _getMessagesRawQuery,
+    variables: <String, dynamic>{
+      'conversation_id': conversationId,
+      'uid': uid,
+    },
+  );
+}
+
 // get messages (or should we just query messages_status based on convo_id and uid)
 
-const getMessagesRawQuery =
+const _getMessagesRawQuery =
     ''' query getMessages(\$conversation_id: String!, \$uid: String!) {
   messages: messages_view(where: {_and: {conversation_id: {_eq: \$conversation_id}, uid: {_eq: \$uid}}}) {
     conversationID: conversation_id
@@ -626,43 +578,108 @@ const getMessagesRawQuery =
 } 
 ''';
 
+Query getNewestPostsReq(
+  String foroID,
+  String uid,
+) {
+  return Query(
+    query: _getNewestPostsRawQuery,
+    variables: <String, dynamic>{
+      'foroID': foroID,
+      'uid': uid,
+    },
+  );
+}
+
 // -------- Posts
 
-const getNewestPostsRawQuery =
+const _getNewestPostsRawQuery =
     ''' query getNewestPosts(\$foroID: String!, \$uid: String!) {
   posts: posts_view(where: {foro_id: {_eq: \$foroID}}, order_by: {created_at: asc}) {
     ...postFields
   }
 }
-$postFieldsRawFragment 
+$_postFieldsRawFragment 
 ''';
 
-const getOldestPostsRawQuery =
+Query getOldestPostsReq(
+  String foroID,
+  String uid,
+) {
+  return Query(
+    query: _getOldestPostsRawQuery,
+    variables: <String, dynamic>{
+      'foroID': foroID,
+      'uid': uid,
+    },
+  );
+}
+
+const _getOldestPostsRawQuery =
     ''' query getOldestPosts(\$foroID: String!, \$uid: String!) {
   posts: posts_view(where: {foro_id: {_eq: \$foroID}}, order_by: {created_at: desc}) {
     ...postFields
   }
 }
-$postFieldsRawFragment 
+$_postFieldsRawFragment 
 ''';
 
-const getMostLikedPostsRawQuery =
+Query getMostLikedPostsReq(
+  String foroID,
+  String uid,
+) {
+  return Query(
+    query: _getMostLikedPostsRawQuery,
+    variables: <String, dynamic>{
+      'foroID': foroID,
+      'uid': uid,
+    },
+  );
+}
+
+const _getMostLikedPostsRawQuery =
     ''' query getMostLikedPosts(\$foroID: String!, \$uid: String!) {
   posts: posts_view(where: {foro_id: {_eq: \$foroID}}, order_by: {reactions_count: desc}) {
     ...postFields
   }
 }
-$postFieldsRawFragment 
+$_postFieldsRawFragment 
 ''';
 
-const getMostCommentedPotsRawQuery =
+Query getMostCommentedPotsReq(
+  String foroID,
+  String uid,
+) {
+  return Query(
+    query: _getMostCommentedPotsRawQuery,
+    variables: <String, dynamic>{
+      'foroID': foroID,
+      'uid': uid,
+    },
+  );
+}
+
+const _getMostCommentedPotsRawQuery =
     ''' query getMostCommentedPots(\$foroID: String!, \$uid: String!) {
   posts: posts_view(where: {foro_id: {_eq: \$foroID}}, order_by: {comments_count: desc}) {
     ...postFields
   }
 }
-$postFieldsRawFragment 
+$_postFieldsRawFragment 
 ''';
+
+Query getPostCommentsReq(
+  String foroID,
+  String postID,
+) {
+  return Query(
+    query: _getPostCommentsRawQuery,
+    variables: <String, dynamic>{
+      'foroID': foroID,
+      'postID': postID,
+    },
+  );
+}
 
 /* variable example:
 {
@@ -674,7 +691,7 @@ $postFieldsRawFragment
 
  */
 
-const getPostCommentsRawQuery =
+const _getPostCommentsRawQuery =
     ''' query getPostComments(\$foroID: String!, \$postID: String!) {
   comments : comments_view(where: {_and: {foro_id: {_eq: \$foroID}, post_id: {_eq: \$postID}}}) {
     creationTime : created_at
@@ -685,12 +702,23 @@ const getPostCommentsRawQuery =
     }
   }
 }
-$profileRawFragment 
+$_profileRawFragment 
 ''';
+
+Query getUserProfileReq(
+  String uid,
+) {
+  return Query(
+    query: _getUserProfileRawQuery,
+    variables: <String, dynamic>{
+      'uid': uid,
+    },
+  );
+}
 
 // ---------- Profile
 
-const getUserProfileRawQuery = ''' query getUserProfile(\$uid: String!) {
+const _getUserProfileRawQuery = ''' query getUserProfile(\$uid: String!) {
  
 } 
 ''';

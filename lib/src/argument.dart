@@ -1,13 +1,13 @@
 class Argument {
-  String type; // int, String, list, etc.
-  String name;
-  String defaultValue;
+  late String type; // int, String, list, etc.
+  late String name;
+  String? defaultValue;
 
   Argument({
-    String type,
-    String name,
-    String defaultValue,
-    bool isNullable,
+    required String type,
+    required String name,
+    String? defaultValue,
+    required bool isNullable,
   }) {
     // TODO: handle timestamptz better, for now the user should take care of this by making
     // the variable name indicative such as "afterTimestamptz"....

@@ -9,6 +9,6 @@ class Query {
   final String precedingBlock;
   final String rawQuery;
 
-  const Query({this.name, this.arguments, this.type, this.rawQuery, this.precedingBlock});
+  const Query({required this.name, required this.arguments, required this.type, required this.rawQuery, required this.precedingBlock});
 }
 

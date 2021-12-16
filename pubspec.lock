@@ -7,27 +7,20 @@ packages:
       name: args
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.0"
-  meta:
-    dependency: transitive
-    description:
-      name: meta
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.4"
+    version: "2.3.0"
   path:
     dependency: "direct main"
     description:
       name: path
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.7.0"
+    version: "1.8.0"
   pedantic:
     dependency: "direct dev"
     description:
       name: pedantic
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.9.2"
+    version: "1.11.1"
 sdks:
-  dart: ">=2.10.0 <3.0.0"
+  dart: ">=2.12.0 <3.0.0"

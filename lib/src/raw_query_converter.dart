@@ -23,7 +23,7 @@ class RawQueryGenerator {
     if (matches.isEmpty) return rawQuery;
 
     for (var match in matches) {
-      final name = r'$' + generateRawQueryName(match.group(0), 'fragment');
+      final name = r'$' + generateRawQueryName(match.group(0)!, 'fragment');
       // add the fragement refrence at the bottom of the query
       rawQuery = rawQuery + '\n' + name;
     }

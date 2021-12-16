@@ -7,9 +7,9 @@ import 'converter.dart';
 import 'formatter.dart';
 import 'util.dart';
 
-void runner(List<String> arguments) async {
-  Uri sourceUri;
-  Uri outputUri;
+Future<void> runner(List<String> arguments) async {
+  late Uri sourceUri;
+  late Uri outputUri;
   // ------------------------------------------------------------------ Argument Parsing
   final parser = ArgParser()
     ..addFlag('help', abbr: 'h', help: 'print the usage', negatable: false)
@@ -67,7 +67,7 @@ Usage: graphql_to_dart [arguments]
   final inputFile = File(sourceUri.path);
   final outputFile = File(outputUri.path);
 
-  File copiedFile;
+  File? copiedFile;
   try {
     copiedFile = makeCopyIfFileExists(outputFile);
   } catch (e) {
@@ -93,7 +93,7 @@ Usage: graphql_to_dart [arguments]
   }
 }
 
-File makeCopyIfFileExists(File fileToCopy) {
+File? makeCopyIfFileExists(File fileToCopy) {
   if (!fileToCopy.existsSync()) return null;
 
   final filePath = fileToCopy.path;

@@ -28,7 +28,7 @@ class GraphQLParser {
       final currentMatch = matches.elementAt(i);
       final precedingBlock = data.substring(previousMatchEnd, currentMatch.start);
 
-      final query = _buildQuery(currentMatch.group(0), precedingBlock);
+      final query = _buildQuery(currentMatch.group(0)!, precedingBlock);
       queries.add(query);
       previousMatchEnd = currentMatch.end;
     }
@@ -37,31 +37,31 @@ class GraphQLParser {
   }
 
   Query _buildQuery(String rawQuery, String precedingBlock) {
-    final type = queryTypeRegex.firstMatch(rawQuery).group(0);
+    final type = queryTypeRegex.firstMatch(rawQuery)!.group(0)!;
 
     String name;
     if (type == 'fragment') {
-      name = fragmentNameRegex.firstMatch(rawQuery).group(0).trim();
+      name = fragmentNameRegex.firstMatch(rawQuery)!.group(0)!.trim();
     } else {
-      name = queryNameRegex.firstMatch(rawQuery).group(0).trim();
+      name = queryNameRegex.firstMatch(rawQuery)!.group(0)!.trim();
     }
 
     // arguments can be null
     final argumentsRawString = queryArgumentsRegex.firstMatch(rawQuery)?.group(0);
     // fragments don't have arguments
-    final arguments = (type != 'fragment') ? _parseQueryArguments(argumentsRawString) : null;
+    final arguments = (type != 'fragment') ? _parseQueryArguments(argumentsRawString) : const <Argument>[];
 
     return Query(name: name, type: type, rawQuery: rawQuery, arguments: arguments, precedingBlock: precedingBlock);
   }
 
-  List<Argument> _parseQueryArguments(String arguments) {
+  List<Argument> _parseQueryArguments(String? arguments) {
     var args = <Argument>[];
     if (arguments == null || arguments.trim().isEmpty) return args;
     final argumentsMatches = extractQueryArgumentsFromRawString.allMatches(arguments);
 
     if (argumentsMatches.isNotEmpty) {
       argumentsMatches.forEach((element) {
-        args.add(_parseSingleArgument(element.group(0)));
+        args.add(_parseSingleArgument(element.group(0)!));
       });
     }
     return args;
@@ -69,11 +69,11 @@ class GraphQLParser {
 
   Argument _parseSingleArgument(String argument) {
     final isNullable = !argument.contains('!');
-    final argumentName = queryArgumentName.firstMatch(argument).group(0).trim();
-    final argumentType = queryArgumentType.firstMatch(argument).group(0).trim();
+    final argumentName = queryArgumentName.firstMatch(argument)!.group(0)!.trim();
+    final argumentType = queryArgumentType.firstMatch(argument)!.group(0)!.trim();
     // default value can be null
     // 'queryArgumentDefaultValue' captures double quotes and whitespace if there's a default value so they need to be removed
-    final defaultValue = queryArgumentDefaultValue.firstMatch(argument)?.group(0)?.trim()?.replaceAll('"', '');
+    final defaultValue = queryArgumentDefaultValue.firstMatch(argument)?.group(0)?.trim().replaceAll('"', '');
     return Argument(
       type: argumentType,
       name: argumentName,
