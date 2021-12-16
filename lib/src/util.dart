@@ -1,9 +1,10 @@
 import 'dart:io';
 
-void printError(String message, [dynamic error]) {
+void printErrorAndExit(String message, [dynamic error]) {
   stderr.writeln(message);
   if (error != null) stderr.writeln(error);
   exitCode = 1;
+  exit(0);
 }
 
 extension FirstLetterCase on String {

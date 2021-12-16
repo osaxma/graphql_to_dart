@@ -32,31 +32,32 @@ Usage: graphql_to_dart [arguments]
   }
 
   if (!argResults.wasParsed('source')) {
-    stderr.writeln('error: the source graphql file needs to be specificed');
+    printErrorAndExit('error: the source (-s) graphql file needs to be specificed');
+    // printError(message)
   } else {
     //print(argResults['source']);
     try {
       sourceUri = Uri.parse(argResults['source']);
 
       if (!File(sourceUri.path).existsSync()) {
-        printError('${argResults['source']} does not exist');
+        printErrorAndExit('${argResults['source']} does not exist');
       }
     } catch (e) {
-      printError('error while parsing the source ${argResults['source']}', e);
+      printErrorAndExit('error while parsing the source ${argResults['source']}', e);
       rethrow;
     }
   }
 
   if (!argResults.wasParsed('output')) {
-    stderr.writeln('error: the output graphql file needs to be specificed');
+    printErrorAndExit('error: the output graphql file needs to be specificed');
   } else {
     try {
       outputUri = Uri.parse(argResults['output']);
       if (!Directory(p.dirname(outputUri.path)).existsSync()) {
-        printError('${p.dirname(outputUri.path)} directory does not exist');
+        printErrorAndExit('${p.dirname(outputUri.path)} directory does not exist');
       }
     } catch (e) {
-      printError('error while parsing the output path ${argResults['output']}', e);
+      printErrorAndExit('error while parsing the output path ${argResults['output']}', e);
       rethrow;
     }
   }
@@ -71,13 +72,13 @@ Usage: graphql_to_dart [arguments]
   try {
     copiedFile = makeCopyIfFileExists(outputFile);
   } catch (e) {
-    printError('error while making an old copy of a previously created output file ', e);
+    printErrorAndExit('error while making an old copy of a previously created output file ', e);
   }
 
   try {
     await convertToDart(inputFile, outputFile);
   } catch (e) {
-    printError('error while parsing the input file', e);
+    printErrorAndExit('error while parsing the input file', e);
     rethrow;
   }
 
