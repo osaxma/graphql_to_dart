@@ -108,7 +108,7 @@ File? makeCopyIfFileExists(File fileToCopy) {
   directory.listSync().forEach((element) {
     if (p.basename(element.path) == newFileName) {
       i += 1;
-      newFileName = p.basenameWithoutExtension(filePath) + '_old_${i}' + p.extension(filePath);
+      newFileName = p.basenameWithoutExtension(filePath) + '_old_$i' + p.extension(filePath);
     }
   });
 

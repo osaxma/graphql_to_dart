@@ -5,7 +5,7 @@ import 'common.dart';
 import 'query.dart';
 
 String generateQueryFunctionWithArguments(Query query) {
-  final functionName = query.name;
+  final functionName = query.name.toLowerCaseFirst();
   final argumentsWithDefaultValue = <Argument>[];
   var variablesString = '';
   var argumentsString = '';

@@ -3,15 +3,15 @@ import 'package:graphql_to_dart/src/query.dart';
 import 'common.dart';
 import 'regex.dart';
 
-
-/// Responsible for generating raw query constants 
+/// Responsible for generating raw query constants
 class RawQueryGenerator {
   String generateRawQueriesConstants(Query query) {
     final rawQueryNameForDart = generateRawQueryName(query.name, query.type);
     // add an escape '\' character to all the variables to avoid conflicting with dart
     final rawQuery = query.rawQuery.replaceAll(r'$', r'\$');
     // create a constant for the raw query and add fragment reference
-    final rawQueryForDart = "const $rawQueryNameForDart =  ''' ${_addReferenceToFragments(rawQuery)} \n''';";
+    final rawQueryForDart =
+        "const $rawQueryNameForDart =  '''${_addReferenceToFragments(rawQuery)}\n''';";
     // if the preceding docs had comments, change it from graphql to dart (# => // and """ """ => /* */)
     final precedingBlockForDart = '\n' + _replaceGraphQLcommentsWithDartComments(query.precedingBlock) + '\n';
 

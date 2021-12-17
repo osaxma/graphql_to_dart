@@ -13,14 +13,30 @@ class Query {
   final String query;
   final Map<String, dynamic> variables;
 
-  Query({required this.query, Map<String, dynamic> variables = const {}})
+  Query({required String query, Map<String, dynamic> variables = const {}})
       // to handle default values that passed as null
-      : variables = variables..removeWhere((key, value) => value == null);
-  
+      : variables = variables..removeWhere((key, value) => value == null),
+        query = _removeDuplicateFragments(query);
+
   @override
   String toString() {
     return 'operation:\n$query\nvariables:\n$variables';
   }
+}
+
+// a temporary work around to remove duplicate fragemtns to avoid the following error:
+//  `multiple definitions for fragment "FragmentName"`
+// this may fail if the closing curly bracket of the fragment has whitespace before it.
+final _captureAllFragements = RegExp(r'fragment.*\{(.|\n)+?^\}', multiLine: true);
+String _removeDuplicateFragments(String string) {
+  if (!string.contains('fragment')) return string;
+  final matches = _captureAllFragements.allMatches(string).toList();
+  if (matches.isEmpty) return string;
+  final uniqueFragments = matches.map((m) => m.group(0)).toSet().reduce(
+        (pre, ele) => (pre ?? '') + '\n\n' + (ele ?? ''),
+      );
+  string = string.replaceAll(_captureAllFragements, '').trim() + '\n\n' + uniqueFragments!;
+  return string;
 }
 ''';
 

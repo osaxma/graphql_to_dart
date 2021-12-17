@@ -20,6 +20,16 @@ extension FirstLetterCase on String {
     return split('_').reduce((value, element) => value + element.toUpperCaseFirst());
   }
 
+  /// trims leading whitespace
+  String ltrim() {
+    return replaceFirst(RegExp(r'^\s+'), '');
+  }
+
+  /// trims trailing whitespace
+  String rtrim() {
+    return replaceFirst(RegExp(r'\s+$'), '');
+  }
+
   // not tested
   /// this will remove extra spaces (i.e., > 1 space in sequence);
   // String removeExtraWhiteSpaces() => replaceAll(RegExp(r'\s+', multiLine: true), ' ');
