@@ -7,7 +7,6 @@ class Argument {
     required String type,
     required String name,
     String? defaultValue,
-    required bool isNullable,
   }) {
     // TODO: handle timestamptz better, for now the user should take care of this by making
     // the variable name indicative such as "afterTimestamptz"....
@@ -15,32 +14,59 @@ class Argument {
     // - it cannot be added as a default argument since it's not const (e.g. DateTime.parse(default value) != const)
     // - the DateTime needs to be converted using toIso8601String().
 
-    type = convertGraphQLTypeToDartType(type);
+    this.type = convertGraphQLTypeToDartType(type);
+    this.name = name.trim();
+    this.defaultValue = defaultValue?.trim().replaceAll('\"', "\'");
+    ;
+  }
 
-    // since we are adding arguments with default values as named parameters without actually placing
-    // the default value (not implemented), we make it nullable. Ideally we should put the default value
-    // For now, the default value is only shown in the raw query of the output file.
-    if (isNullable || defaultValue != null) {
-      this.type = type + '?';
-    } else {
-      this.type = type;
+  String get defaultValueAsDart {
+    if (defaultValue == null || type.contains('?')) return '';
+
+    if (type.startsWith('String')) {
+      if (!defaultValue!.contains('\"') && !defaultValue!.contains("\'")) {
+        return "='$defaultValue'";
+      }
     }
 
-    this.name = name;
-    this.defaultValue = defaultValue;
+    return '=$defaultValue';
   }
 }
 
+final typeFromlist = RegExp(r'(?<=\[).*(?=\])');
 String convertGraphQLTypeToDartType(String type) {
-  if (type == 'String' || type == 'String!') {
+  type = type.trim();
+  // check if it's a list
+  if (type.contains('[') && type.contains(']')) {
+    final genericType = typeFromlist.firstMatch(type)!.group(0)!;
+    final isNullable = type.endsWith('!');
+
+    if (isNullable) {
+      return 'List<' + convertGraphQLTypeToDartType(genericType) + '>?';
+    } else {
+      return 'List<' + convertGraphQLTypeToDartType(genericType) + '>';
+    }
+  }
+
+  if (type == 'String') {
+    return 'String?';
+  } else if (type == 'String!') {
     return 'String';
-  } else if (type == 'timestamptz' || type == 'timestamptz!') {
+  } else if (type == 'timestamptz') {
+    return 'String?';
+  } else if (type == 'timestamptz!') {
     return 'String';
-  } else if (type == 'Int' || type == 'Int!') {
+  } else if (type == 'Int') {
+    return 'int?';
+  } else if (type == 'Int!') {
     return 'int';
-  } else if (type == 'order_by' || type == 'order_by!') {
+  } else if (type == 'order_by') {
+    return 'String?';
+  } else if (type == 'order_by!') {
     return 'String';
-  } else if (type == 'Boolean' || type == 'Boolean!') {
+  } else if (type == 'Boolean') {
+    return 'bool?';
+  } else if (type == 'Boolean!') {
     return 'bool';
   } else {
     throw Exception('type: $type is Unknown GraphQL type!');

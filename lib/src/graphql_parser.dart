@@ -67,18 +67,23 @@ class GraphQLParser {
     return args;
   }
 
+  final argumentSplitter = RegExp('=|:');
+  // final argumentNameReplace = RegExp('=|:');
   Argument _parseSingleArgument(String argument) {
-    final isNullable = !argument.contains('!');
-    final argumentName = queryArgumentName.firstMatch(argument)!.group(0)!.trim();
-    final argumentType = queryArgumentType.firstMatch(argument)!.group(0)!.trim();
+    // arguments come as: "$foroID: String!"
+    //                    "$limit: int! = 10"
+    //                    "$roles: [String!]!"
+    // so we split by both ':' and '='. If the list has 3 elements, it means there's a default value. 
+    final arguments = argument.split(RegExp('=|:'));
+    final argumentName = arguments[0].replaceAll('\$', '').trim();
+    final argumentType = arguments[1].trim();
+
     // default value can be null
-    // 'queryArgumentDefaultValue' captures double quotes and whitespace if there's a default value so they need to be removed
-    final defaultValue = queryArgumentDefaultValue.firstMatch(argument)?.group(0)?.trim().replaceAll('"', '');
+    final defaultValue = arguments.length == 3 ? arguments[2].trim() : null;
     return Argument(
       type: argumentType,
       name: argumentName,
       defaultValue: defaultValue,
-      isNullable: isNullable,
     );
   }
 }

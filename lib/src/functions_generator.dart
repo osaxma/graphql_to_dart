@@ -21,7 +21,7 @@ String generateQueryFunctionWithArguments(Query query) {
   if (argumentsWithDefaultValue.isNotEmpty) {
     argumentsString = argumentsString + '{';
     for (var arg in argumentsWithDefaultValue) {
-      argumentsString = argumentsString + arg.type + ' ' + arg.name.toLowerCaseCamel() + ',';
+      argumentsString = argumentsString + arg.type + ' ' + arg.name.toLowerCaseCamel() + arg.defaultValueAsDart + ',';
       variablesString = variablesString + "'${arg.name}'" + ':' + arg.name.toLowerCaseCamel() + ',';
     }
     argumentsString = argumentsString + '}';
