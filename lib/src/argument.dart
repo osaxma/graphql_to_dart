@@ -39,7 +39,7 @@ String convertGraphQLTypeToDartType(String type) {
   // check if it's a list
   if (type.contains('[') && type.contains(']')) {
     final genericType = typeFromlist.firstMatch(type)!.group(0)!;
-    final isNullable = type.endsWith('!');
+    final isNullable = !type.endsWith('!');
 
     if (isNullable) {
       return 'List<' + convertGraphQLTypeToDartType(genericType) + '>?';
@@ -48,22 +48,14 @@ String convertGraphQLTypeToDartType(String type) {
     }
   }
 
-  if (type == 'String') {
+  if (type == 'String' || type == 'order_by' || type == 'timestamptz' || type == 'json') {
     return 'String?';
-  } else if (type == 'String!') {
-    return 'String';
-  } else if (type == 'timestamptz') {
-    return 'String?';
-  } else if (type == 'timestamptz!') {
+  } else if (type == 'String!' || type == 'order_by!' || type == 'timestamptz!' || type == 'json!') {
     return 'String';
   } else if (type == 'Int') {
     return 'int?';
   } else if (type == 'Int!') {
     return 'int';
-  } else if (type == 'order_by') {
-    return 'String?';
-  } else if (type == 'order_by!') {
-    return 'String';
   } else if (type == 'Boolean') {
     return 'bool?';
   } else if (type == 'Boolean!') {
