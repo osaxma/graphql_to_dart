@@ -2,7 +2,7 @@
 
 A simple command-line application for converting a `GraphQL` document to string constants in dart.
 
-This is mainly useful when having a `GraphQL` document that contains a collection of queries/mutations/subscriptions. For instance, the document can be the allowed-list that can be used in Hasura (a GraphQL engine on top of PostgreSQL). Since the allow-list requires the definition of the operations to be an exact match (e.g. inputs and returned fields), this tool can help in converting those definitions to dart without having to do them manually.    
+This is mainly useful when having a `GraphQL` document that contains a collection of operations (i.e. queries, mutations, subscriptions). For instance, the document can be the allowed-list that can be used in Hasura (a GraphQL engine on top of PostgreSQL). Since the allow-list requires the definition of the operations to be an exact match (e.g. inputs and returned fields), this tool can help in converting those definitions to dart without having to do them manually.    
 
 Usage:
 ```sh
